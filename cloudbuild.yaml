@@ -3,8 +3,23 @@ options:
 
 steps:
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'build', '-t', 'gcr.io/slice-api-462817/ubuntu-bambu', '.' ]
+    args: ['build', '-t', 'gcr.io/slice-api-462817/ubuntu-bambu', '.']
+  
   - name: 'gcr.io/cloud-builders/docker'
-    args: [ 'push', 'gcr.io/slice-api-462817/ubuntu-bambu' ]
+    args: ['push', 'gcr.io/slice-api-462817/ubuntu-bambu']
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      [
+        'run', 'deploy', 'ubuntu-bambu',
+        '--image', 'gcr.io/slice-api-462817/ubuntu-bambu',
+        '--platform', 'managed',
+        '--region', 'europe-central2',
+        '--allow-unauthenticated',
+        '--min-instances', '0',
+        '--max-instances', '5'
+      ]
+
 images:
   - 'gcr.io/slice-api-462817/ubuntu-bambu'
