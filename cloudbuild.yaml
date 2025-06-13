@@ -1,19 +1,10 @@
+options:
+  logging: CLOUD_LOGGING_ONLY
+
 steps:
-  # 1. Zgradi Docker image
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['build', '-t', 'gcr.io/slice-api-462817/ubuntu_bambu', '.']
-
-  # 2. Potisni image v Google Container Registry
+    args: [ 'build', '-t', 'gcr.io/slice-api-462817/ubuntu-bambu', '.' ]
   - name: 'gcr.io/cloud-builders/docker'
-    args: ['push', 'gcr.io/slice-api-462817/ubuntu_bambu']
-
-  # 3. Deploy-aj aplikacijo na Cloud Run
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
-    args:
-      ['run', 'deploy', 'ubuntu-bambu',
-       '--image', 'gcr.io/slice-api-462817/ubuntu_bambu',
-       '--region', 'europe-central2',
-       '--platform', 'managed',
-       '--port', '80',
-       '--allow-unauthenticated']
+    args: [ 'push', 'gcr.io/slice-api-462817/ubuntu-bambu' ]
+images:
+  - 'gcr.io/slice-api-462817/ubuntu-bambu'
