@@ -41,7 +41,7 @@ COPY app.py files/ ./
 
 # Nastavitve okolja za Flask
 ENV FLASK_APP=app.py
-EXPOSE 80
+EXPOSE 8080
 
 # Zagon Flask aplikacije
 CMD ["python3", "app.py"]
