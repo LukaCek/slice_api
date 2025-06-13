@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test</title>
+</head>
+<body>
+    <p>{{q}}</p>
+    <!--{{json_dict}}-->
+    <h1>Price calculator</h1>
+    <form action="/price" method="post" enctype="multipart/form-data">
+        <label for="file">stl file:</label>
+        <input type="file" name="file" id="file" accept=".stl" required>
+        <label for="quality">Quality:</label>
+        <select name="quality" id="quality" required>
+            {% for quality in json_dict.keys() %}
+                <option value="{{ quality }}">{{ quality }}</option>
+            {% endfor %}
+        </select>
+        <select name="output" id="output">
+            <option value="3mf">3mf</option>
+            <option value="stl">stl</option>
+            <option value="gcode">gcode</option>
+            <option value="slicedata" selected>slicedata</option>
+        </select>
+        
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

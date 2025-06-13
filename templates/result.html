@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results</title>
+</head>
+<body>
+    <h1>Slicing successful</h1>
+    <p>Quality: {{quality}}</p>
+    <p>Filament type: {{filament_data['type']}}<br>Material used in miters: {{filament_data['used_m']}}<br>Material used in
+        grams: {{filament_data['used_g']}}</p>
+    <p>Model time: {{model_time}} / {{model_time_in_min}}min<br>
+    Total time: {{total_time}} / {{total_time_in_min}}min<br>
+    First layer time: {{first_layer_time}} / {{first_layer_time_in_min}}min<br>
+    Max Z height: {{max_z}}</p>
+
+    <h2>Cenik:</h2>
+    <p>Cena materiala: {{cena_materiala}}<br>
+    Cena elektrike: {{cena_elektrike}}<br>
+    Cena vzdrzalnika: {{cena_vzdrzalnika}}<br>
+    Skupna cena: {{cena}}<br></p>
+</body>
+
+</html>

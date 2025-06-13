@@ -1,0 +1,58 @@
+orcaslicer --slice 0 \
+  --load-settings "" \
+  --load-filaments "" \
+  --export-slicedata ./temp \
+  --outputdir ./temp \
+  file.stl
+
+orcaslicer --slice 0 --export-slicedata . --outputdir . PETG-2-4.3mf file.stl
+
+orcaslicer --outputdir temp --export-slicedata temp --load-settings "settings-PETG-2-4.json" --load-filaments "" file.stl
+
+orcaslicer --slice 0 \
+  --load-settings "" \
+  --load-filaments "" \
+  --export-slicedata ./temp \
+  --outputdir ./temp \
+  file.stl
+
+orcaslicer --slice 0 \
+            --export-slicedata ./temp \
+            --load-printer "printers/Bambu Lab P1S 0.4 nozzle.json" \
+            --load-settings "process/0.20mm Standard @BBL X1C.json" \
+            --load-filaments "filament/Bambu PATG Basic @BBL X1C.json" \
+            model.stl --outputdir ./temp
+
+Slice 3mf directly	Using the printer/filament/print settings included in the 3mf
+orcaslicer --slice 0 --debug 2 --export-3mf output.3mf test_data/moon.3mf
+Slicing all the plates in moon.3mf, export the result to output.3mf
+
+Slice 3mf with specific settings	Using the printer/filament/print settings included in command line
+orcaslicer --curr-bed-type "Cool Plate" --load-settings "test_data/machine.json;test_data/process.json" --load-filaments "filament1.json;;filament3.json;filament4;;" --slice 2 --debug 2 --export-3mf output.3mf test_data/moon.3mf
+Slicing plate 2 in moon.3mf, export the result to output.3mf, using the test_data/machine.json to replace all the printer settings in 3mf, using test_data/process.json to replace all the print settings in 3mf, using filament1.json to replace the filament-1's setting in 3mf, using filament3.json to replace the filament-3's setting in 3mf, using filament4.json to replace the filament-4's setting in 3mf, keep the filament-2/5's setting in 3mf.
+
+Slice stls	Using the settings included in command line
+orcaslicer --arrange 1 \
+  --orient 1 \
+  --export-slicedata ./temp \
+  --load-settings "test_data/machine.json;test_data/process.json" \
+  --load-filaments "test_data/filament.json" \
+  --slice 0 \
+  --debug 2 \
+  --export-3mf ./temp/output.3mf \
+  --info \
+  --pipe pipename \
+  file.stl
+Using test_data/machine.json for printer setting, Using test_data/process.json for print setting, Using test_data/filament.json for filament setting, orient and arrange before slicing
+
+orcaslicer --arrange 1 \
+  --orient 1 \
+  --export-slicedata ./temp \
+  --load-settings "printers/Bambu Lab P1S 0.4 nozzle.json;process/process.json" \
+  --load-filaments "filament/Bambu PETG Basic @BBL X1C.json" \
+  --slice 0 \
+  --debug 2 \
+  --export-3mf ./temp/output.3mf \
+  --info \
+  --pipe pipename \
+  file.stl
