@@ -17,6 +17,7 @@ steps:
         '--platform', 'managed',
         '--region', 'europe-west1',
         '--allow-unauthenticated',
+        '--member', 'allUsers',
         '--min-instances', '0',
         '--max-instances', '5',
         '--concurrency', '1'
