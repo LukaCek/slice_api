@@ -18,10 +18,10 @@ steps:
         '--region', 'europe-west1',
         '--allow-unauthenticated',
         '--min-instances', '0',
-        '--max-instances', '5',
+        '--max-instances', '9',
         '--concurrency', '1',
         '--cpu', '2',
-        '--memory', '2Gi'
+        '--memory', '4Gi'
       ]
 
 images:
