@@ -19,7 +19,8 @@ steps:
         '--allow-unauthenticated',
         '--min-instances', '0',
         '--max-instances', '5',
-        '--concurrency', '1'
+        '--concurrency', '1',
+        '--allow-unauthenticated'
       ]
 
 images:
