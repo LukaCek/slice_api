@@ -15,7 +15,7 @@ steps:
         'run', 'deploy', 'ubuntu-orca',
         '--image', 'gcr.io/slice-api-462817/ubuntu-orca',
         '--platform', 'managed',
-        '--region', 'europe-central1',
+        '--region', 'europe-west1',
         '--allow-unauthenticated',
         '--min-instances', '0',
         '--max-instances', '5',
