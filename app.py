@@ -152,10 +152,10 @@ def price():
         if error_code:
             if error_code == -50:
                 q -= 1
-                return f"Slicing was not successful <br> 3D model is to big."
+                return f"Slicing was not successful <br> 3D model is too big."
             elif error_code == -100:
                 q -= 1
-                return f"Slicing was not successful <br> 3D model is to small."
+                return f"Slicing was not successful <br> 3D model is too small."
             else:
                 q -= 1
                 return f"Slicing was not successful NEW ERROR<br> Error code: {error_code}<br> Error string: {error_string}"
