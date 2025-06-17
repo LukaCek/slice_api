@@ -9,8 +9,6 @@ import json
 import xml.etree.ElementTree as ET
 
 
-q = 0
-
 CENA_PLA_PLATIKE = 2 # cent/g
 CENA_PETG_PLATIKE = 1.8 # cent/g
 
@@ -134,7 +132,7 @@ def price():
             file_path = os.path.join("temp/", filename)
             if os.path.isfile(file_path):
                 os.remove(file_path)
-        q -= 1
+
         return f"Slicing failed <br> Quality: {quality}<br>q: {q}"
     app.logger.info("Slicing finished")
 
@@ -151,18 +149,14 @@ def price():
         app.logger.info(f"Error code: {error_code}")
         if error_code:
             if error_code == -50:
-                q -= 1
                 return f"Slicing was not successful <br> 3D model is too big."
             elif error_code == -100:
-                q -= 1
                 return f"Slicing was not successful <br> 3D model is too small."
             else:
-                q -= 1
                 return f"Slicing was not successful NEW ERROR<br> Error code: {error_code}<br> Error string: {error_string}"
 
         if "Success." not in result:
             app.logger.info("Slicing was not successful: " + result)
-            q -= 1
             return f"Slicing was not successful <br> {result}"
     
     # Wait for 3mf file to be generated
@@ -234,7 +228,6 @@ def price():
     # Zaokroži ceno na dve decimalke (zaorkroži navzgor)
 
 
-    q -= 1
     if output == "slicedata":
         return render_template("result.html", quality=quality, filament_data=filament_data, model_time=model_time.group(1), total_time=total_time.group(1), first_layer_time=first_layer_time.group(1), max_z=max_z.group(1), model_time_in_min=model_time_in_min, total_time_in_min=total_time_in_min, first_layer_time_in_min=first_layer_time_in_min, cena_materiala=cena_materiala, cena_elektrike=cena_elektrike, cena_vzdrzalnika=cena_vzdrzalnika, cena=cena)
     elif output == "3mf":
