@@ -101,7 +101,7 @@ def hello():
 
         json_dict[clean_name] = str(file)
 
-    return render_template("index.html", q=q, json_dict=json_dict)
+    return render_template("index.html", json_dict=json_dict)
 
 @app.route("/price", methods=["POST"])
 def price():
@@ -225,18 +225,34 @@ def price():
     cena_vzdrzalnika = centi_v_evro_zaokrozi(cena_vzdrzalnika)
     cena = centi_v_evro_zaokrozi(cena)
 
-    # Zaokroži ceno na dve decimalke (zaorkroži navzgor)
+    data = {
+        "quality": quality,
+        "filament": filament_data,
+        "model_time": model_time.group(1),
+        "total_time": total_time.group(1),
+        "first_layer_time": first_layer_time.group(1),
+        "max_z": max_z.group(1),
+        "model_time_in_min": model_time_in_min,
+        "total_time_in_min": total_time_in_min,
+        "first_layer_time_in_min": first_layer_time_in_min,
+        "cena_materiala": cena_materiala,
+        "cena_elektrike": cena_elektrike,
+        "cena_vzdrzalnika": cena_vzdrzalnika,
+        "cena": cena
+    }
 
 
     if output == "slicedata":
-        return render_template("result.html", quality=quality, filament_data=filament_data, model_time=model_time.group(1), total_time=total_time.group(1), first_layer_time=first_layer_time.group(1), max_z=max_z.group(1), model_time_in_min=model_time_in_min, total_time_in_min=total_time_in_min, first_layer_time_in_min=first_layer_time_in_min, cena_materiala=cena_materiala, cena_elektrike=cena_elektrike, cena_vzdrzalnika=cena_vzdrzalnika, cena=cena)
+        return render_template("result.html", **data)
     elif output == "3mf":
         return send_file("temp/output/output.3mf", as_attachment=True)
     elif output == "gcode":
         return gcode
-    else:
+    elif output == "stl":
         return send_file("temp/file.stl", as_attachment=True)
-    
+    else:
+        return json.jsonify(data)
+
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080, debug=True)
