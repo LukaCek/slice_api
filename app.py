@@ -106,10 +106,6 @@ def hello():
 @app.route("/price", methods=["POST"])
 def price():
     app.logger.info("Received POST request to /price")
-    global q
-    if q >= 1:
-        return f"Poskusi ponovno. Strežnik je zaseden. {q}"
-    q += 1
     
     # Get the quality
     quality = request.form["quality"]
@@ -133,7 +129,7 @@ def price():
             if os.path.isfile(file_path):
                 os.remove(file_path)
 
-        return f"Slicing failed <br> Quality: {quality}<br>q: {q}"
+        return f"Slicing failed <br> Quality: {quality}"
     app.logger.info("Slicing finished")
 
     # Check if slicing was successful
