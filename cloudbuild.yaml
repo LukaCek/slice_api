@@ -8,6 +8,16 @@ steps:
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/slice-api-462817/ubuntu-orca']
 
+  # Remove untagged container versions from
+  # artifacts/docker/slice-api-462817/gcr.io/ubuntu-orca
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        gcloud container images list-tags gcr.io/slice-api-462817/ubuntu-orca --filter='-tags:*' --format='get(digest)' | \
+        xargs -r -I {} gcloud container images delete -q --force-delete-tags gcr.io/slice-api-462817/ubuntu-orca@{}
+
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
     args:
