@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, jsonify
 import os
 import re
 import math
@@ -20,7 +20,7 @@ CENA_VZDRZEVANJA = 30 # eur
 def centi_v_evro_zaokrozi(centi):
     evri = centi / 100
     evri_zaokrozeni = math.ceil(evri * 100) / 100
-    return f"{evri_zaokrozeni:.2f} €"
+    return evri_zaokrozeni
 
 # Helper to convert '1h 16m 56s' → minutes (rounded up)
 def time_to_minutes(timestr):
@@ -167,7 +167,6 @@ def price():
     os.makedirs("temp/output", exist_ok=True)
     with zipfile.ZipFile("temp/output.zip", 'r') as zip_ref:
         zip_ref.extractall("temp/output")
-    #os.remove("temp/output.zip")
     os.remove("temp/file.stl")
 
     ### Read slice info file ###
@@ -192,14 +191,14 @@ def price():
         gcode = f.read()
 
     # Extract time and height
-    model_time = re.search(r"model printing time:\s+([0-9hms\s]+);", gcode)
-    total_time = re.search(r"total estimated time:\s+([0-9hms\s]+)", gcode)
-    first_layer_time = re.search(r"first layer printing time.*?=\s+([0-9hms\s]+)", gcode)
-    max_z = re.search(r"max_z_height:\s+([0-9.]+)", gcode)
+    model_time = re.search(r"model printing time:\s+([0-9hms\s]+);", gcode).group(1)
+    total_time = re.search(r"total estimated time:\s+([0-9hms\s]+)", gcode).group(1)
+    first_layer_time = re.search(r"first layer printing time.*?=\s+([0-9hms\s]+)", gcode).group(1)
+    max_z = re.search(r"max_z_height:\s+([0-9.]+)", gcode).group(1)
 
-    model_time_in_min = time_to_minutes(model_time.group(1))
-    total_time_in_min = time_to_minutes(total_time.group(1))
-    first_layer_time_in_min = time_to_minutes(first_layer_time.group(1))
+    model_time_in_min = time_to_minutes(model_time)
+    total_time_in_min = time_to_minutes(total_time)
+    first_layer_time_in_min = time_to_minutes(first_layer_time)
     # Izračun cene
     if filament_data['type'] == "PLA":
         cena_materiala = CENA_PLA_PLATIKE * float(filament_data['used_g'])
@@ -224,10 +223,10 @@ def price():
     data = {
         "quality": quality,
         "filament": filament_data,
-        "model_time": model_time.group(1),
-        "total_time": total_time.group(1),
-        "first_layer_time": first_layer_time.group(1),
-        "max_z": max_z.group(1),
+        "model_time": model_time,
+        "total_time": total_time,
+        "first_layer_time": first_layer_time,
+        "max_z": max_z,
         "model_time_in_min": model_time_in_min,
         "total_time_in_min": total_time_in_min,
         "first_layer_time_in_min": first_layer_time_in_min,
@@ -241,13 +240,12 @@ def price():
     if output == "slicedata":
         return render_template("result.html", **data)
     elif output == "3mf":
-        return send_file("temp/output/output.3mf", as_attachment=True)
+        os.rename("temp/output.zip", "temp/output.3mf")
+        return send_file("temp/output.3mf", as_attachment=True)
     elif output == "gcode":
-        return gcode
-    elif output == "stl":
-        return send_file("temp/file.stl", as_attachment=True)
+        return send_file("temp/output/Metadata/plate_1.gcode", as_attachment=True)
     else:
-        return json.jsonify(data)
+        return jsonify(data)
 
 
 if __name__ == "__main__":
