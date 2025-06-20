@@ -15,8 +15,8 @@ steps:
     args:
       - -c
       - |
-        gcloud artifacts docker images list gcr.io/slice-api-462817/ubuntu-orca --include-tags --format='get(digest)' --filter='NOT tags:*' | \
-        xargs -r -I {} gcloud artifacts docker images delete -q gcr.io/slice-api-462817/ubuntu-orca@{}
+        gcloud container images list-tags gcr.io/slice-api-462817/ubuntu-orca --filter='-tags:*' --format='get(digest)' | \
+        xargs -r -I {} gcloud container images delete -q --force-delete-tags gcr.io/slice-api-462817/ubuntu-orca@{}
 
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: gcloud
