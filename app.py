@@ -16,6 +16,10 @@ CENA_ELEKTRIKE = 20.002 # cent/kWh
 PORABA_TISKALNIKA = 120 # Watts
 VZDRZEVANJE_VSAKIH = 240*60 # ur * min v uri
 CENA_VZDRZEVANJA = 30 # eur
+# cena za eno uro delovanja tiskalnika
+CENA_TISKALNIKA_URO = 200 # cent/h
+
+MINIMALNA_CENA = 200 # cent
 
 def centi_v_evro_zaokrozi(centi):
     evri = centi / 100
@@ -211,13 +215,16 @@ def price():
     # Izračun cene
     cena_elektrike = CENA_ELEKTRIKE * (total_time_in_min/60) * PORABA_TISKALNIKA / (100 * 60)
     cena_vzdrzalnika = (CENA_VZDRZEVANJA / VZDRZEVANJE_VSAKIH) * model_time_in_min
+    cena_tiskalnika = CENA_TISKALNIKA_URO * (model_time_in_min / 60)
 
-    cena = cena_materiala + cena_elektrike + cena_vzdrzalnika
+    cena = cena_materiala + cena_elektrike + cena_vzdrzalnika + cena_tiskalnika + MINIMALNA_CENA
 
     # Pretvorba cen iz centov na evro
     cena_materiala = centi_v_evro_zaokrozi(cena_materiala)
     cena_elektrike = centi_v_evro_zaokrozi(cena_elektrike)
     cena_vzdrzalnika = centi_v_evro_zaokrozi(cena_vzdrzalnika)
+    cena_tiskalnika = centi_v_evro_zaokrozi(cena_tiskalnika)
+    minimalna_cena = centi_v_evro_zaokrozi(MINIMALNA_CENA)
     cena = centi_v_evro_zaokrozi(cena)
 
     data = {
@@ -233,6 +240,8 @@ def price():
         "cena_materiala": cena_materiala,
         "cena_elektrike": cena_elektrike,
         "cena_vzdrzalnika": cena_vzdrzalnika,
+        "minimalna_cena": minimalna_cena,
+        "cena_tiskalnika": cena_tiskalnika,
         "cena": cena
     }
 
