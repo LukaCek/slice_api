@@ -33,7 +33,42 @@ Current settings on this website are from the files dir. Because I couldn't figu
 *   **Frontend:** HTML, Jinja2
 *   **Hosting:** Docker, Google Cloud Run
 
-## Local Installation and Setup
+## Installation:
+
+### Installation with Docker (reconanded)
+
+1.  **Clone the repository:**
+    ```bash
+    git clone https://github.com/LukaCek/slice_api.git
+    cd slice_api
+    ```
+    or
+
+    Download the repository as a ZIP file and extract it.
+    
+2.  **Install docker:**
+
+    Go to [docker.com](https://www.docker.com/products/docker-desktop/) and install Docker Desktop.
+
+3.  **Build and start the app:**
+
+    For this to work, Docker needs to be running.
+
+    **Linux/macOS:**
+    ```bash
+    ./start.sh
+    ```
+    **Windows:**
+    
+        .\start.ps1
+        or
+        # this can be run by right clicking the file and selecting "Run with PowerShell"
+
+    This script will install orcaslocer inside the container and all dependencies automatically.
+
+    This script can also be used to start the app after the first time.
+
+### Local Installation and Setup
 
 To run the project in a local environment, you need Python, Flask, and OrcaSlicer installed.
 
