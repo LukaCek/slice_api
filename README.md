@@ -49,6 +49,12 @@ Current settings on this website are from the files dir. Because I couldn't figu
 2.  **Install docker:**
 
     Go to [docker.com](https://www.docker.com/products/docker-desktop/) and install Docker Desktop.
+    
+    or
+    ```bash
+    snap install docker
+    ```
+    this will install docker on linux using snap package manager.
 
 3.  **Build and start the app:**
 
@@ -73,6 +79,7 @@ Current settings on this website are from the files dir. Because I couldn't figu
 
     This script can also be used to start the app after the first time.
 
+<!--
 ### Local Installation and Setup
 
 To run the project in a local environment, you need Python, Flask, and OrcaSlicer installed.
@@ -96,7 +103,7 @@ To run the project in a local environment, you need Python, Flask, and OrcaSlice
     python app.py
     ```
     The application will be accessible at `http://localhost:8080`.
-
+-->
 
 ## TODO
 
