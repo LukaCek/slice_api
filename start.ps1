@@ -1,3 +1,4 @@
+# I heven't run this script yet, because I don't have Windows machine available.
 # start.ps1
 $ErrorActionPreference = "Stop"
 
