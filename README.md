@@ -58,8 +58,13 @@ Current settings on this website are from the files dir. Because I couldn't figu
     ```bash
     ./start.sh
     ```
-    **Windows:**
-    
+    **Windows:** I haven't tested this, because I don't have Windows, but you can try either of these methods:
+    *   Using Git Bash or WSL terminal:
+        ```bash
+        ./start.sh
+        ```
+    *   Using PowerShell:
+        ```powershell
         .\start.ps1
         or
         # this can be run by right clicking the file and selecting "Run with PowerShell"
